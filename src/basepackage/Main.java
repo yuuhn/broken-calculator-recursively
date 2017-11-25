@@ -137,9 +137,14 @@ class RecursiveSequence {
 
         if (number == requiredNumber) {
 
+            /*
             // +1 because of "="
             if (foundDepth > depth + 1) {
                 foundDepth = depth + 1;
+            }
+            */
+            if (foundDepth > depth) {
+                foundDepth = depth;
             }
             return;
         }
@@ -231,24 +236,34 @@ public class Main {
          */
 
 
-        // Allowed keys of 0123456789+-*/:
-        int[] numbers = new int[] {1,2};
-        int[] operations = new int[]{1,2,3,4};
+        // Allowed digits of 0123456789:
+        int[] numbers = new int[] {1,5};
+        // Allowed operations of "+" (1), "-" (2), "*" (3), "/" (4)
+        int[] operations = new int[]{1,2,3};
 
         // Maximum press number:
-        int presses = 20;
+        int presses = 15;
 
         // Required number
-        int required = 344;
+        int required = 313;
 
         // ------------------------------------------
 
-        //String result = combination(presses, required, keys);
-        //System.out.println(result);
+        long tStart = System.currentTimeMillis();
 
         RecursiveSequence rs = new RecursiveSequence(numbers, operations, presses, required);
-        System.out.println(rs.getFoundDepth());
 
-        // out: -2*1717
+        long tEnd = System.currentTimeMillis();
+        long tDelta = tEnd - tStart;
+        double elapsedSeconds = tDelta / 1000.0;
+
+        if (rs.getFoundDepth() >= presses) {
+            System.out.println("length = Impossible");
+        }
+        else {
+            System.out.println("length = " + rs.getFoundDepth());
+        }
+
+        System.out.println("seconds elapsed = " + elapsedSeconds);
     }
 }
